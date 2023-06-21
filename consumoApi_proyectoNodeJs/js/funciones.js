@@ -1,4 +1,4 @@
-const url = 'http://localhost:8080/api/cliente'
+const url = 'https://proyectonodejsbackend.onrender.com/api/cliente'
 
 //Clientes ------------------------------------------------------------------------------------------------------------------------------------------------------
 const listarClientes = async () => {
@@ -35,7 +35,6 @@ const registrarCliente = async () => {
     let telefono = document.getElementById('telefono').value
     let estado = document.getElementById('estado').value
 
-    if(nombre.trim() == '' || cedula.trim() == '' || email.trim )
 
     let cliente = {
         nombre: nombre,
@@ -146,7 +145,7 @@ if (document.querySelector('#btn-actualizar')) {
 
 //Ventas--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-const urlVenta = 'http://localhost:8080/api/venta'
+const urlVenta = 'https://proyectonodejsbackend.onrender.com/api/venta'
 const listarVentas = async () => {
     let body = document.getElementById('listaVentas')
     if (body) {
