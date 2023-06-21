@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Registrar Venta</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="body-page">
+        <nav>
+            <div class="nav-wrapper" style="background-color:#ABB2B9 ;">
+                <a href="./home.html" class="brand-logo"><b>Valisoft</b></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="./listaVentas.html">Ventas</a></li>
+                    <li><a href="./listaClientes.html">Clientes</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h3 style="text-align: center;">Registrar Venta</h3>
+            <div class="col s12">
+                <form class="col s12" id="formCrear">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">add_shopping_cart
+                            </i>
+                            <input id="numeroVenta" name="numeroVenta" type="text" class="validate" required>
+                            <label for="numeroVenta">Numero de Venta</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="nombreCliente" name="nombreCliente" type="text" class="validate" required>
+                            <label for="nombreCliente">Nombre Cliente</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">attach_money</i>
+                            <input id="subtotal" name="subtotal" type="number" class="validate" placeholder="$"
+                                required>
+                            <label for="subtotal">Subtotal</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">trending_up</i>
+                            <input id="iva" name="iva" type="number" class="validate" placeholder="%" step="any"
+                                required>
+                            <label for="iva">Iva</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <select class="browser-default" id="estado" style="font-family:'Play', sans-serif;"
+                                required>
+                                <option value="" disabled selected>Estado</option>
+                                <option value="true">Cancelada</option>
+                                <option value="false">Pendiente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="button" id="btnRegistrarVenta" name="action"
+                        style="font-family:'Play', sans-serif;">Guardar
+                        <i class="material-icons right"></i>
+                    </button>
+                </form>
+            </div><br><br>
+        </div>
+    </div>
+    <footer class="page-footer" style="background-color: #ABB2B9 ;">
+        <div class="footer-copyright" style="background-color: #ABB2B9 ;">
+            <div class="container" style="text-align: center; font-family:'Play', sans-serif">
+                © 2023 Valisoft
+                <a class="grey-text text-lighten-4 right" href="#!"></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/funciones.js"></script>
+    
+</body>
+
+</html>
