@@ -1,4 +1,5 @@
 const url = 'https://proyectonodejsbackend.onrender.com/api/cliente'
+//const url = 'http://localhost:8080/api/cliente'
 
 //Clientes ------------------------------------------------------------------------------------------------------------------------------------------------------
 const listarClientes = async () => {
@@ -27,7 +28,6 @@ const listarClientes = async () => {
     }
 }
 listarClientes()
-
 const registrarCliente = async () => {
     let nombre = document.getElementById('nombre').value
     let cedula = document.getElementById('cedula').value
@@ -42,24 +42,79 @@ const registrarCliente = async () => {
         email: email,
         telefono: telefono,
         estado: estado
+
     }
 
-    if (cedula.length >= 10) {
-        fetch(url, {
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify(cliente),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
-        })
-            .then(response => response.json()) //Respuesta del metodo POST de la API
-            .then(json => {
-                alert(json.mensaje)
-            })
+    const expressionNombre = /^(?=.*[a-zA-Z])\s*[a-zA-Z\s]*$/
+    const expressionCedula = /^[0-9]{8,10}$/
+    const expressionEmail = /^([a-zA-Z0-9]+)\@[a-zA-Z]+\.[a-zA-Z]+$/
+    const expressionTelefono = /^[0-9]{10}$/
+
+    if (nombre == '' || cedula == '' || email == '' || telefono == '' || estado == '') {
+        Swal.fire({
+            icon: "error",
+            title: "No se aceptan campos vacios",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
     }
-    else {
-        alert('La cedula debe contener como minimo 10 caracteres')
+
+    if (!expressionNombre.test(nombre)) {
+        Swal.fire({
+            icon: "error",
+            title: "Nombre no permitido",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
     }
+
+    if (!expressionCedula.test(cedula)) {
+        Swal.fire({
+            icon: "error",
+            title: "La cedula debe contener de 8 a 10 digitos",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionEmail.test(email)) {
+        Swal.fire({
+            icon: "error",
+            title: "Email no permitido",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionTelefono.test(telefono)) {
+        Swal.fire({
+            icon: "error",
+            title: "El telefono debe contener 10 digitos",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify(cliente),
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+    })
+        .then(response => response.json()) //Respuesta del metodo POST de la API
+        .then(json => {
+            Swal.fire({
+                title: json.mensaje,
+                icon: 'success',
+                confirmButtonColor: "#45B39D"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    window.location.href = './listaClientes.html';
+                }
+            });
+        });
 }
+
 
 const editar = (cliente) => {
     document.getElementById('_id').value = ''
@@ -95,41 +150,111 @@ const actualizarCliente = async () => {
         tipoModificacion: 'Unitaria'
     }
 
-    if (cedula.length >= 10) {
-        fetch(url, {
-            method: 'PUT',
-            mode: 'cors',
-            body: JSON.stringify(cliente),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
-        })
-            .then(response => response.json()) //Respuesta del metodo POST de la API
-            .then(json => {
-                alert(json.mensaje)
-            })
+    const expressionNombre = /^(?=.*[a-zA-Z])\s*[a-zA-Z\s]*$/
+    const expressionCedula = /^[0-9]{8,10}$/
+    const expressionEmail = /^([a-zA-Z0-9]+)\@[a-zA-Z]+\.[a-zA-Z]+$/
+    const expressionTelefono = /^[0-9]{10}$/
+
+    if (nombre == '' || cedula == '' || email == '' || telefono == '' || estado == '') {
+        Swal.fire({
+            icon: "error",
+            title: "No se aceptan campos vacios",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
     }
-    else {
-        alert('La cedula debe contener como minimo 10 caracteres')
+
+    if (!expressionNombre.test(nombre)) {
+        Swal.fire({
+            icon: "error",
+            title: "Nombre no permitido",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
     }
+
+    if (!expressionCedula.test(cedula)) {
+        Swal.fire({
+            icon: "error",
+            title: "La cedula debe contener de 8 a 10 digitos",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionEmail.test(email)) {
+        Swal.fire({
+            icon: "error",
+            title: "Email no permitido",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionTelefono.test(telefono)) {
+        Swal.fire({
+            icon: "error",
+            title: "El telefono debe contener 10 digitos",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    fetch(url, {
+        method: 'PUT',
+        mode: 'cors',
+        body: JSON.stringify(cliente),
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+    })
+        .then(response => response.json()) //Respuesta del metodo POST de la API
+        .then(json => {
+            Swal.fire({
+                title: json.mensaje,
+                icon: 'success',
+                confirmButtonColor: "#45B39D"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    window.location.href = './listaClientes.html';
+                }
+            });
+        });
+
 }
 
 const eliminarCliente = (_id) => {
-    if (confirm('¿Desea realizar la eliminación?') == true) {
-        //Capturar valores enviados desde el formulario
-        let cliente = {
-            _id: _id
-        }
-        fetch(url, {
-            method: 'DELETE',
-            mode: 'cors',
-            body: JSON.stringify(cliente),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
+    Swal.fire({
+        title: "¿Eliminar Cliente?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButton: "yes",
+        confirmButtonColor: "#45B39D",
+        cancelButtonColor: "#E74C3C "
+    })
+        .then((result) => {
+            if (result.isConfirmed) {
+                let cliente = {
+                    _id: _id
+                }
+                fetch(url, {
+                    method: 'DELETE',
+                    mode: 'cors',
+                    body: JSON.stringify(cliente),
+                    headers: { "Content-type": "application/json; charset=UTF-8" }
+                })
+                    .then((response) => response.json())
+                    .then((json) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Eliminacion exitosa'
+                        })
+                            .then(result => {
+                                if (result.isConfirmed) {
+                                    window.location.reload()
+                                }
+                            })
+                    })
+            }
         })
-
-            .then(response => response.json()) //Respuesta del metodo POST de la API
-            .then(json => {
-                alert(json.mensaje)
-            })
-    }
 }
 
 if (document.querySelector('#btn-registrar')) {
@@ -146,6 +271,8 @@ if (document.querySelector('#btn-actualizar')) {
 //Ventas--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 const urlVenta = 'https://proyectonodejsbackend.onrender.com/api/venta'
+//const urlVenta = 'http://localhost:8080/api/venta'
+
 const listarVentas = async () => {
     let body = document.getElementById('listaVentas')
     if (body) {
@@ -167,7 +294,7 @@ const listarVentas = async () => {
                             <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick='editarVenta(${JSON.stringify(venta)})'>Editar</a>
                             <a class="waves-effect waves-light btn modal-trigger red" href="#" onclick='eliminarVenta("${venta._id}")'>Eliminar</a>
                         </td></tr>`
-                        console.log(venta)
+                    console.log(venta)
                     body.innerHTML = mensaje;
                 })
             })
@@ -193,21 +320,78 @@ const registrarVenta = async () => {
         estado: estado
     }
 
+    const expressionNumVenta = /^[1-9]\d*$/
+    const expressionNomCliente = /^(?=.*[a-zA-Z])\s*[a-zA-Z\s]*$/
+    const expressionSubtotal = /^[1-9]\d*$/
+    const expressionIva = /^[0-9]\d*$/
+
+    if (numeroVenta == '' || nombreCliente == '' || subtotal == '' || iva == '' || estado == '') {
+        Swal.fire({
+            icon: "error",
+            title: "No se aceptan campos vacios",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionNumVenta.test(numeroVenta)) {
+        Swal.fire({
+            icon: "error",
+            title: "Numero de venta incorrecto",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionNomCliente.test(nombreCliente)) {
+        Swal.fire({
+            icon: "error",
+            title: "Nombre no permitido",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionSubtotal.test(subtotal)) {
+        Swal.fire({
+            icon: "error",
+            title: "El valor del subtotal es incorrecto",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionIva.test(iva)) {
+        Swal.fire({
+            icon: "error",
+            title: "El valor del iva es incorrecto",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
     fetch(urlVenta, {
         method: 'POST',
         mode: 'cors',
         body: JSON.stringify(venta),
-        headers:{ "Content-type": "application/json; charset=UTF-8" }
+        headers: { "Content-type": "application/json; charset=UTF-8" }
     })
 
-    .then(response => response.json()) //Respuesta del metodo POST de la API
-    .then(json =>{
-        alert(json.mensaje)
-        window.location.href='file:///C:/Users/USUARIO/OneDrive/Escritorio/consumoApi_proyectoNodeJs/listaVentas.html#'
-    })
+        .then(response => response.json()) //Respuesta del metodo POST de la API
+        .then(json => {
+            Swal.fire({
+                title: json.mensaje,
+                icon: 'success',
+                confirmButtonColor: "#45B39D"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    window.location.href = './listaVentas.html';
+                }
+            });
+        });
 }
 
-const editarVenta = (venta) =>{
+const editarVenta = (venta) => {
     console.log(venta)
     document.getElementById('_id').value = ''
     document.getElementById('numeroVenta').value = ''
@@ -229,7 +413,7 @@ const editarVenta = (venta) =>{
     document.getElementById('estado').value = venta.estado
 }
 
-const actualizarVenta = async() =>{
+const actualizarVenta = async () => {
     //Capturar los datos enviados desde el formulario
     let numeroVenta = document.getElementById('numeroVenta').value
     //let fecha = document.getElementById('fecha').value
@@ -250,39 +434,113 @@ const actualizarVenta = async() =>{
         estado: estado
     }
 
+    const expressionNumVenta = /^[1-9]\d*$/
+    const expressionNomCliente = /^(?=.*[a-zA-Z])\s*[a-zA-Z\s]*$/
+    const expressionSubtotal = /^[1-9]\d*$/
+    const expressionIva = /^[0-9]\d*$/
+
+    if (numeroVenta == '' || nombreCliente == '' || subtotal == '' || iva == '' || estado == '') {
+        Swal.fire({
+            icon: "error",
+            title: "No se aceptan campos vacios",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionNumVenta.test(numeroVenta)) {
+        Swal.fire({
+            icon: "error",
+            title: "Numero de venta incorrecto",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionNomCliente.test(nombreCliente)) {
+        Swal.fire({
+            icon: "error",
+            title: "Nombre no permitido",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionSubtotal.test(subtotal)) {
+        Swal.fire({
+            icon: "error",
+            title: "El valor del subtotal es incorrecto",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
+    if (!expressionIva.test(iva)) {
+        Swal.fire({
+            icon: "error",
+            title: "El valor del iva es incorrecto",
+            confirmButtonColor: "#45B39D"
+        });
+        return;
+    }
+
     fetch(urlVenta, {
         method: 'PUT',
         mode: 'cors',
         body: JSON.stringify(venta),
-        headers:{ "Content-type": "application/json; charset=UTF-8" }
+        headers: { "Content-type": "application/json; charset=UTF-8" }
     })
 
-    .then(response => response.json()) //Respuesta del metodo POST de la API
-    .then(json =>{
-        alert(json.mensaje)
-        window.location.href='file:///C:/Users/USUARIO/OneDrive/Escritorio/consumoApi_proyectoNodeJs/listaVentas.html#'
-    })
+        .then(response => response.json()) //Respuesta del metodo POST de la API
+        .then(json => {
+            Swal.fire({
+                title: json.mensaje,
+                icon: 'success',
+                confirmButtonColor: "#45B39D"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    window.location.href = './listaVentas.html';
+                }
+            });
+        });
 }
 
-const eliminarVenta = (_id) =>{
-    if(confirm('Desea eliminar esta venta') == true){
-        
-        let venta = {
-            _id: _id
-        }
-        fetch(urlVenta, {
-            method: 'DELETE',
-            mode: 'cors',
-            body: JSON.stringify(venta),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
+const eliminarVenta = (_id) => {
+    Swal.fire({
+        title: "¿Eliminar Venta?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButton: "yes",
+        confirmButtonColor: "#45B39D",
+        cancelButtonColor: "#E74C3C "
+    })
+        .then((result) => {
+            if (result.isConfirmed) {
+                let venta = {
+                    _id: _id
+                }
+                fetch(urlVenta, {
+                    method: 'DELETE',
+                    mode: 'cors',
+                    body: JSON.stringify(venta),
+                    headers: { "Content-type": "application/json; charset=UTF-8" }
+                })
+                    .then((response) => response.json())
+                    .then((json) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Eliminacion exitosa'
+                        })
+                            .then(result => {
+                                if (result.isConfirmed) {
+                                    window.location.reload()
+                                }
+                            })
+                    })
+            }
         })
-        .then(response => response.json())
-        .then(json =>{
-            alert(json.mensaje)
-            window.location.href='file:///C:/Users/USUARIO/OneDrive/Escritorio/consumoApi_proyectoNodeJs/listaVentas.html#'
-        })
-    }
 }
+
 
 if (document.querySelector('#btnRegistrarVenta')) {
     document.querySelector('#btnRegistrarVenta')
