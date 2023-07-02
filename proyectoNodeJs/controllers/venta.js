@@ -1,4 +1,5 @@
 const { response } = require('express')
+const bcrypt = require('bcrypt')
 const Venta = require('../models/venta')
 
 //Registrar

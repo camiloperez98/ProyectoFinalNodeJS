@@ -283,7 +283,7 @@ const listarVentas = async () => {
                 let listarVentas = data.ventas // Renombrar la variable para evitar conflicto de nombres
                 listarVentas.map((venta) => {
                     mensaje += `<tr>
-                    <td>${venta.numeroVenta}</td>` +
+                        <td>${venta.numeroVenta}</td>` +
                         `<td>${venta.fecha}</td>` +
                         `<td>${venta.nombreCliente}</td>` +
                         `<td>${venta.subtotal}</td>` +
