@@ -44,7 +44,7 @@ const putCliente = async (req, res = response) => {
     let mensaje = ''
 
     try {
-        await Cliente.findOneAndUpdate({_id: body._id}, {cedula: body.cedula, email: body.email, telefono: body.telefono, estado: body.estado })
+        await Cliente.findOneAndUpdate({_id: body._id}, {nombre: body.nombre, cedula: body.cedula, email: body.email, telefono: body.telefono, estado: body.estado })
         mensaje = 'Actualización exitosa. Modificación: Sencilla'
     } catch (error) {
         mensaje = error
