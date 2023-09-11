@@ -44,14 +44,14 @@ const putCliente = async (req, res = response) => {
     let mensaje = ''
 
     try {
-        if(body.tipoModificacion == 'Unitaria'){
+        //if(body.tipoModificacion == 'Unitaria'){
         await Cliente.findOneAndUpdate({_id: body._id}, {cedula: body.cedula, email: body.email, telefono: body.telefono, estado: body.estado })
         mensaje = 'Actualización exitosa. Modificación: Sencilla'
-        } 
-        else{
-            await Cliente.updateMany({nombre: body.nombre, cedula: body.cedula, email: body.email, telefono: body.telefono, estado: body.estado})
-            mensaje = 'Actualización exitosa. Modificación: Multiple'
-        }
+        //} 
+        //else{
+          //  await Cliente.updateMany({nombre: body.nombre, cedula: body.cedula, email: body.email, telefono: body.telefono, estado: body.estado})
+            //mensaje = 'Actualización exitosa. Modificación: Multiple'
+        //}
     } catch (error) {
         mensaje = error
     }
